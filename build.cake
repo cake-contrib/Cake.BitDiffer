@@ -203,7 +203,7 @@ Task("_startSonarQube")
             Login = _sonarqubeApiToken,
             Url = _sonarqubeUri,
             Organization = Names.SONARQUBE_ORGANISATION,
-            Branch = _version.BranchName.Replace("/","_")
+            //Branch = _version.BranchName.Replace("/","_")
         };
 
         if(FileExists(Paths.TEST_COVERAGE_RESULT_FILE_HTML)) {
