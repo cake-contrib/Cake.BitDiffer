@@ -8,6 +8,16 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{24FCDC51-3BF5-4CAD-A2B1-86D53F2787ED}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{172E9EEA-A8C4-4205-A0EB-7FE5807E951C}"
+	ProjectSection(SolutionItems) = preProject
+		.appveyor.yml = .appveyor.yml
+		build.cake = build.cake
+		CHANGELOG = CHANGELOG
+		GitVersion.yml = GitVersion.yml
+		LICENSE.md = LICENSE.md
+		build\names.cake = build\names.cake
+		build\paths.cake = build\paths.cake
+		README.md = README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.BitDiffer", "src\Cake.BitDiffer\Cake.BitDiffer.csproj", "{E4B53BE6-BA04-4600-8F47-0B1E6E71D3BD}"
 EndProject

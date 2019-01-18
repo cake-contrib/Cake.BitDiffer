@@ -3,10 +3,20 @@ using System.Xml.Linq;
 
 namespace Cake.BitDiffer
 {
+    /// <summary>
+    ///     Result object for the comparison
+    /// </summary>
     public class BitDifferResult
     {
+        /// <summary>
+        ///     Origin raw result as XML
+        /// </summary>
         public XDocument RawResult { get; set; }
 
+        /// <summary>
+        ///     Get the change message, if any (change type or error message)
+        /// </summary>
+        /// <returns></returns>
         public string GetChangeMessage()
         {
             if (RawResult == null)
@@ -14,16 +24,20 @@ namespace Cake.BitDiffer
                 return "No result file generated";
             }
 
-            var errorNode = RawResult
-                .Element("AssemblyComparison")
-                .Element("Groups")
-                .Descendants("Group")
+            XElement errorNode = RawResult
+                ?.Element("AssemblyComparison")
+                ?.Element("Groups")
+                ?.Descendants("Group")
                 .FirstOrDefault(w => w.Attribute("Change")?.Value != "None" || w.Attribute("HasErrors") != null);
 
             return errorNode?.Attribute("ErrorDetail")?.Value ??
                    errorNode?.Attribute("Change")?.Value;
         }
 
+        /// <summary>
+        ///     Check, if the result contains detected changes
+        /// </summary>
+        /// <returns></returns>
         public bool HasChanges()
         {
             if (RawResult == null)
@@ -32,10 +46,10 @@ namespace Cake.BitDiffer
             }
 
             return RawResult
-                .Element("AssemblyComparison")
-                .Element("Groups")
-                .Descendants("Group")
-                .Any(w => w.Attribute("Change")?.Value != "None" || w.Attribute("HasErrors") != null);
+                       ?.Element("AssemblyComparison")
+                       ?.Element("Groups")
+                       ?.Descendants("Group")
+                       .Any(w => w.Attribute("Change")?.Value != "None" || w.Attribute("HasErrors") != null) ?? false;
         }
     }
 }

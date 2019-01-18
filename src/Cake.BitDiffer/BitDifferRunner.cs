@@ -7,10 +7,13 @@ using System.Xml.Linq;
 
 namespace Cake.BitDiffer
 {
+    /// <summary>
+    ///     Runner for ButDiffer command line tool
+    /// </summary>
     public sealed class BitDifferRunner : Tool<BitDifferSettings>
     {
-        private readonly IFileSystem _fileSystem;
         private readonly ICakeEnvironment _environment;
+        private readonly IFileSystem _fileSystem;
         private readonly FilePath _rawFile = $"{Guid.NewGuid()}.xml";
 
         /// <inheritdoc />
@@ -21,6 +24,11 @@ namespace Cake.BitDiffer
             _environment = environment;
         }
 
+        /// <summary>
+        ///     Execute the BitDiffer command line with given settings
+        /// </summary>
+        /// <param name="settings">Settings for BitDiffer execution</param>
+        /// <returns>Result of the comparison</returns>
         public BitDifferResult Run(BitDifferSettings settings)
         {
             if (settings == null)
@@ -45,11 +53,14 @@ namespace Cake.BitDiffer
             // Check settings
             if (settings.PreviousAssemblyFile == null || !_fileSystem.Exist(settings.PreviousAssemblyFile))
             {
-                throw new ArgumentException("Filename for previous version should be set and exists", nameof(settings.PreviousAssemblyFile));
+                throw new ArgumentException("Filename for previous version should be set and exists",
+                    nameof(settings.PreviousAssemblyFile));
             }
+
             if (settings.CurrentAssemblyFile == null || !_fileSystem.Exist(settings.CurrentAssemblyFile))
             {
-                throw new ArgumentException("Filename for current version should be set and exists", nameof(settings.CurrentAssemblyFile));
+                throw new ArgumentException("Filename for current version should be set and exists",
+                    nameof(settings.CurrentAssemblyFile));
             }
 
             var builder = new ProcessArgumentBuilder();
@@ -61,7 +72,7 @@ namespace Cake.BitDiffer
             }
 
             // Result file
-            if (settings.ResultOutputFile != null)
+            if (!string.IsNullOrWhiteSpace(settings.ResultOutputFile?.FullPath))
             {
                 builder.AppendQuoted("{0} {1}", "-out",
                     settings.ResultOutputFile.GetNormalizedAbsolutePath(_environment));

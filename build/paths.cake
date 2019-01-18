@@ -16,7 +16,7 @@ public static class Paths {
     public const string RELEASE_NOTES_FILE = "./CHANGELOG";
     public const string ASSEMBLY_INFO_FILE = "./src/GlobalAssemblyInfo.cs";
 
-    public static readonly Uri LICENSE_URL = new Uri("https://github.com/WebDucer/Cake.BitDiffer/blob/develop/LICENSE");
+    public static readonly Uri LICENSE_URL = new Uri("https://github.com/WebDucer/Cake.BitDiffer/blob/develop/LICENSE.md");
     public static readonly Uri PROJECT_URL = new Uri("https://github.com/WebDucer/Cake.BitDiffer");
 
         /* HELPER */
