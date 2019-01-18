@@ -18,6 +18,15 @@ namespace Cake.BitDiffer.Tests
         {
             FileSystem.CreateFile("TestFiles/Version1/Cake.BitDiffer.TestAssembly.dll");
             FileSystem.CreateFile("TestFiles/Version2/Cake.BitDiffer.TestAssembly.dll");
+            if (string.IsNullOrWhiteSpace(Settings?.ResultOutputFile?.FullPath))
+            {
+                FileSystem.CreateFile("comparison.xml");
+            }
+            else
+            {
+                FileSystem.CreateFile(Settings.ResultOutputFile);
+            }
+
             var toolLocator = new ToolLocator(Environment, new ToolRepository(Environment),
                 new ToolResolutionStrategy(FileSystem, Environment, Globber, new FakeConfiguration()));
             var tool = new BitDifferRunner(FileSystem, Environment, ProcessRunner, toolLocator);

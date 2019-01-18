@@ -45,7 +45,24 @@ namespace Cake.BitDiffer
                 result.RawResult = XDocument.Load(_rawFile.GetNormalizedAbsolutePath(_environment));
             }
 
+            RemoveTemporaryFiles(settings);
+
             return result;
+        }
+
+        private void RemoveTemporaryFiles(BitDifferSettings settings)
+        {
+            // Remove row result
+            if (_fileSystem.GetFile(_rawFile).Exists)
+            {
+                _fileSystem.GetFile(_rawFile).Delete();
+            }
+
+            // Remove result file, if not defined by user
+            if (string.IsNullOrWhiteSpace(settings.ResultOutputFile?.FullPath))
+            {
+                _fileSystem.GetFile("./comparison.xml").Delete();
+            }
         }
 
         private ProcessArgumentBuilder GetArguments(BitDifferSettings settings)
