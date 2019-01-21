@@ -1,0 +1,23 @@
+version: 1.0.{build}-{branch}
+skip_tags: true
+image: Visual Studio 2017
+cache: tools -> ../build.cake, packages.config
+
+build_script:
+  - ps: .\build.ps1 -target AppVeyor
+test: off
+artifacts:
+  - path: BuildOutput/Artifacts/*.nupkg
+    name: Package
+
+for:
+
+-
+  branches:
+    only:
+      - master
+      - develop
+      - /release\/.*/
+      - /hotfix\/.*/
+  deploy_script:
+    - ps: .\build.ps1 -target DeployLibrary
