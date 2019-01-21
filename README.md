@@ -37,8 +37,8 @@ var settings = new BitDifferSettings {
 };
 var compareResult = BitDiffer(settings);
 Information(compareResult.HasChanges());
-Information(compareResult.GetChangeMessage());
-Information(compareResult.RawResult);
+Information(compareResult.GetChangeMessage()); // Short message of detected change or error
+Information(compareResult.RawResult); // Full analysis result
 
 // Or with inline configuration
 var result = BitDiffer(options => {
