@@ -18,6 +18,7 @@ public static class Paths {
 
     public static readonly Uri LICENSE_URL = new Uri("https://github.com/WebDucer/Cake.BitDiffer/blob/develop/LICENSE.md");
     public static readonly Uri PROJECT_URL = new Uri("https://github.com/WebDucer/Cake.BitDiffer");
+    public const string SOURCE_URL = "https://github.com/WebDucer/Cake.BitDiffer.git";
 
         /* HELPER */
     public static string Quote(Cake.Core.IO.Path path) {
