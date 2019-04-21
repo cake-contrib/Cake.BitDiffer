@@ -10,8 +10,8 @@ var configuration = Argument("configuration", "Release");
 ///////////////////////////////////////////////////////////////////////////////
 
 #tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
-#tool "nuget:?package=MSBuild.SonarQube.Runner.Tool&version=4.3.1"
-#tool "nuget:?package=JetBrains.dotCover.CommandLineTools&version=2018.3.1"
+#tool "nuget:?package=MSBuild.SonarQube.Runner.Tool&version=4.6.0"
+#tool "nuget:?package=JetBrains.dotCover.CommandLineTools&version=2018.3.4"
 
 #addin "nuget:?package=Cake.Sonar&version=1.1.18"
 
@@ -97,6 +97,8 @@ Task("_buildLibraries")
                     .SetConfiguration(configuration)
                     .WithTarget("Build")
                     .WithProperty("OutputPath", outputPath)
+                    .WithProperty("ContinuousIntegrationBuild", "true")
+                    .WithProperty("DeterministicSourcePaths", "true")
             );
         }
     });
@@ -182,7 +184,8 @@ Task("_sendTestResultsOnAppVeyor")
     .Description("Send unit tests result, if running on app veyor CI")
     .WithCriteria(AppVeyor.IsRunningOnAppVeyor)
     .Does(() => {
-        BuildSystem.AppVeyor.UploadTestResults(Paths.ARTIFACTS_OUTPUT + Paths.TEST_RESULT_FILE, AppVeyorTestResultsType.MSTest);
+        var testResultFile = GetFiles(Paths.ARTIFACTS_OUTPUT + "*.trx").Single();
+        BuildSystem.AppVeyor.UploadTestResults(testResultFile, AppVeyorTestResultsType.MSTest);
     });
 
 Task("_runTests")
@@ -195,11 +198,12 @@ Task("_startSonarQube")
     .WithCriteria(!string.IsNullOrEmpty(_sonarqubeUri))
     .WithCriteria(!string.IsNullOrEmpty(_sonarqubeApiToken))
     .Does(() => {
+        var testResultFile = GetFiles(Paths.ARTIFACTS_OUTPUT + "*.trx").Single();
         var sonarSettings = new SonarBeginSettings {
             Key = Names.PROJECT_ID,
             Name = Names.PROJECT_ID,
             Version = BuildSystem.IsLocalBuild ? "ManualRun" : _version.SemVer,
-            NUnitReportsPath = Paths.TEST_RESULT_FILE,
+            VsTestReportsPath = MakeAbsolute(testResultFile).FullPath,
             Login = _sonarqubeApiToken,
             Url = _sonarqubeUri,
             Organization = Names.SONARQUBE_ORGANISATION,
@@ -244,6 +248,13 @@ Task("_createNuGetPackage")
             ProjectUrl = Paths.PROJECT_URL,
             OutputDirectory = Paths.ARTIFACTS_OUTPUT,
             BasePath = Paths.BUILD_OUTPUT,
+            IconUrl = new Uri("https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png"),
+            Repository = new NuGetRepository {
+                Type = "git",
+                Commit = _version.Sha,
+                Branch = _version.BranchName,
+                Url = Paths.SOURCE_URL
+            },
             Files = new [] {
                 new NuSpecContent {Source = Names.PROJECT_ID + ".dll", Target = netStandardTarget},
                 new NuSpecContent {Source = Names.PROJECT_ID + ".pdb", Target = netStandardTarget},
