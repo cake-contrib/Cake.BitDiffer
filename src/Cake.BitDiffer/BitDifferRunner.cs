@@ -3,6 +3,7 @@ using Cake.Core.IO;
 using Cake.Core.Tooling;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace Cake.BitDiffer
@@ -36,9 +37,11 @@ namespace Cake.BitDiffer
                 throw new ArgumentNullException(nameof(settings));
             }
 
-            Run(settings, GetArguments(settings));
+            // Issue #4: Redirect the standard output for error detection
+            var executionResult = RunProcess(settings, GetArguments(settings), new ProcessSettings { RedirectStandardOutput = true});
+            executionResult.WaitForExit();
 
-            var result = new BitDifferResult();
+            var result = new BitDifferResult {ExecutionResult = executionResult.GetStandardOutput()?.ToArray()};
 
             if (_fileSystem.Exist(_rawFile))
             {
