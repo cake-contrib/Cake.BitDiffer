@@ -17,4 +17,13 @@
     <ProjectReference Include="..\..\src\Cake.BitDiffer\Cake.BitDiffer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestFiles\MemberChangeBreaking.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\NoChanges.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

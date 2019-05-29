@@ -1,10 +1,9 @@
-﻿using Cake.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
+using Cake.Core;
 using Cake.Core.IO;
 using Cake.Core.Tooling;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace Cake.BitDiffer
 {
@@ -38,14 +37,16 @@ namespace Cake.BitDiffer
             }
 
             // Issue #4: Redirect the standard output for error detection
-            var executionResult = RunProcess(settings, GetArguments(settings), new ProcessSettings { RedirectStandardOutput = true});
+            var executionResult = RunProcess(settings, GetArguments(settings),
+                new ProcessSettings {RedirectStandardOutput = true});
             executionResult.WaitForExit();
 
-            var result = new BitDifferResult {ExecutionResult = executionResult.GetStandardOutput()?.ToArray()};
+            var result = new BitDifferResult(executionResult.GetStandardOutput());
 
             if (_fileSystem.Exist(_rawFile))
             {
-                result.RawResult = XDocument.Load(_rawFile.GetNormalizedAbsolutePath(_environment));
+                result = new BitDifferResult(executionResult.GetStandardOutput(),
+                    XDocument.Load(_rawFile.GetNormalizedAbsolutePath(_environment)));
             }
 
             RemoveTemporaryFiles(settings);
@@ -159,7 +160,7 @@ namespace Cake.BitDiffer
         /// <returns>The tool executable names</returns>
         protected override IEnumerable<string> GetToolExecutableNames()
         {
-            return new[] { "BitDiffer.Console.exe" };
+            return new[] {"BitDiffer.Console.exe"};
         }
 
         #endregion

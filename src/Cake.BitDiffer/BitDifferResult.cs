@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -10,14 +11,25 @@ namespace Cake.BitDiffer
     public class BitDifferResult
     {
         /// <summary>
+        ///     Constructor for the result
+        /// </summary>
+        /// <param name="xmlResult">Raw XML result of comparison</param>
+        /// <param name="output">Standard output content</param>
+        public BitDifferResult(IEnumerable<string> output, XDocument xmlResult = null)
+        {
+            RawResult = xmlResult;
+            ExecutionResult = output?.ToArray();
+        }
+
+        /// <summary>
         ///     Origin raw result as XML
         /// </summary>
-        public XDocument RawResult { get; internal set; }
+        public XDocument RawResult { get; }
 
         /// <summary>
         ///     Standard output content of the BitDiffer execution
         /// </summary>
-        public string[] ExecutionResult { get; internal set; }
+        public string[] ExecutionResult { get; }
 
         /// <summary>
         ///     Get the change message, if any (change type or error message)
@@ -74,7 +86,7 @@ namespace Cake.BitDiffer
         {
             if (ExecutionResult == null)
             {
-                return true;
+                return false;
             }
 
             return ExecutionResult.Any(s => s.StartsWith("error", StringComparison.InvariantCultureIgnoreCase));
@@ -84,7 +96,7 @@ namespace Cake.BitDiffer
         {
             if (RawResult == null)
             {
-                return true;
+                return false;
             }
 
             return RawResult
