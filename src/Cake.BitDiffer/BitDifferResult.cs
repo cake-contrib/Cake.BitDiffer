@@ -49,7 +49,7 @@ namespace Cake.BitDiffer
         {
             if (RawResult == null)
             {
-                return "No result file generated";
+                return null;
             }
 
             var errorNode = RawResult
