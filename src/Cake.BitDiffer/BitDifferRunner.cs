@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using Cake.Core;
 using Cake.Core.IO;
@@ -41,11 +42,13 @@ namespace Cake.BitDiffer
                 new ProcessSettings {RedirectStandardOutput = true});
             executionResult.WaitForExit();
 
-            var result = new BitDifferResult(executionResult.GetStandardOutput());
+            var output = executionResult.GetStandardOutput().ToArray();
+
+            var result = new BitDifferResult(output);
 
             if (_fileSystem.Exist(_rawFile))
             {
-                result = new BitDifferResult(executionResult.GetStandardOutput(),
+                result = new BitDifferResult(output,
                     XDocument.Load(_rawFile.GetNormalizedAbsolutePath(_environment)));
             }
 
@@ -95,8 +98,8 @@ namespace Cake.BitDiffer
             // Result file
             if (!string.IsNullOrWhiteSpace(settings.ResultOutputFile?.FullPath))
             {
-                builder.AppendQuoted("{0} {1}", "-out",
-                    settings.ResultOutputFile.GetNormalizedAbsolutePath(_environment));
+                builder.Append("-out")
+                    .AppendQuoted(settings.ResultOutputFile.GetNormalizedAbsolutePath(_environment));
             }
 
             // Only public members
