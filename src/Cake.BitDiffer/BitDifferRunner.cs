@@ -42,7 +42,7 @@ namespace Cake.BitDiffer
                 new ProcessSettings {RedirectStandardOutput = true});
             executionResult.WaitForExit();
 
-            var output = executionResult.GetStandardOutput().ToArray();
+            var output = executionResult.GetStandardOutput()?.ToArray();
 
             var result = new BitDifferResult(output);
 

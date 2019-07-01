@@ -144,7 +144,7 @@ namespace Cake.BitDiffer.Tests
         [Test]
         public void ResultOutputFile_Set()
         {
-            CheckParameterSetting(s => s.ResultOutputFile = "./Result.xml", "-out /working/result.xml", true);
+            CheckParameterSetting(s => s.ResultOutputFile = "./Result.xml", "-out \"/working/result.xml\"", true);
         }
 
         [Test]
