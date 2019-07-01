@@ -1,4 +1,9 @@
-# 0.3
+# 0.3.1
+
+- #4 Fixes error detection from standard output
+- #5 Fixes parameter generation for output file
+
+## 0.3
 
 - #4: Detect errors during comparisson from standard output
 
