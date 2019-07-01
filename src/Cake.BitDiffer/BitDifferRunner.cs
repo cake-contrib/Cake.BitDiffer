@@ -95,8 +95,8 @@ namespace Cake.BitDiffer
             // Result file
             if (!string.IsNullOrWhiteSpace(settings.ResultOutputFile?.FullPath))
             {
-                builder.AppendQuoted("{0} {1}", "-out",
-                    settings.ResultOutputFile.GetNormalizedAbsolutePath(_environment));
+                builder.Append("-out")
+                    .AppendQuoted(settings.ResultOutputFile.GetNormalizedAbsolutePath(_environment));
             }
 
             // Only public members
