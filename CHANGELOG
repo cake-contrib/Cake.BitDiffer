@@ -1,4 +1,8 @@
-# 0.3.2
+# 0.4
+
+- #7: Changes from repository move to [cake-contrib](https://github.com/cake-contrib) organization
+
+## 0.3.2
 
 - #4 Fixes error detection from standard output
 - #5 Fixes parameter generation for output file

@@ -1,6 +1,6 @@
 version: 1.0.{build}-{branch}
 skip_tags: true
-image: Visual Studio 2017
+image: Visual Studio 2019
 cache: tools -> ../build.cake, packages.config
 
 build_script:
@@ -16,7 +16,6 @@ for:
   branches:
     only:
       - master
-      - develop
       - /release\/.*/
       - /hotfix\/.*/
   deploy_script:

@@ -9,10 +9,10 @@ public static class Names {
 
     public const string PROJECT_TITLE = "Cake Addin for using BitDiffer coimmand line tool";
     public static readonly string[] PROJECT_AUTHORS = {"Eugen [WebDucer] Richter"};
-    public static readonly string[] PROJECT_OWNERS = {"Eugen [WebDucer] Richter"};
+    public static readonly string[] PROJECT_OWNERS = {"Eugen [WebDucer] Richter", "cake-contrib"};
     public const string PROJECT_DESCRIPTION = @"Cake Addin for using BitDiffer coimmand line tool";
     public static readonly string PROJECT_COPYRIGHTS = string.Format("MIT - (c) {0} Eugen [WebDucer] Richter", DateTime.Now.Year);
-    public static readonly string[] PROJECT_TAGS = {"Cake", "Addin", "BitDiffer", "WebDucer"};
+    public static readonly string[] PROJECT_TAGS = {"Cake", "Addin", "BitDiffer", "WebDucer", "cake-contrib"};
 
     public const string SONARQUBE_ORGANISATION = "webducer-oss";
 }
