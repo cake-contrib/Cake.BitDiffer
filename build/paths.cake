@@ -16,9 +16,9 @@ public static class Paths {
     public const string RELEASE_NOTES_FILE = "./CHANGELOG";
     public const string ASSEMBLY_INFO_FILE = "./src/GlobalAssemblyInfo.cs";
 
-    public static readonly Uri LICENSE_URL = new Uri("https://github.com/WebDucer/Cake.BitDiffer/blob/develop/LICENSE.md");
-    public static readonly Uri PROJECT_URL = new Uri("https://github.com/WebDucer/Cake.BitDiffer");
-    public const string SOURCE_URL = "https://github.com/WebDucer/Cake.BitDiffer.git";
+    public static readonly Uri LICENSE_URL = new Uri("https://github.com/cake-contrib/Cake.BitDiffer/blob/master/LICENSE.md");
+    public static readonly Uri PROJECT_URL = new Uri("https://github.com/cake-contrib/Cake.BitDiffer");
+    public const string SOURCE_URL = "https://github.com/cake-contrib/Cake.BitDiffer.git";
 
         /* HELPER */
     public static string Quote(Cake.Core.IO.Path path) {

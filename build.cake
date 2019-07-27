@@ -11,9 +11,9 @@ var configuration = Argument("configuration", "Release");
 
 #tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
 #tool "nuget:?package=MSBuild.SonarQube.Runner.Tool&version=4.6.0"
-#tool "nuget:?package=JetBrains.dotCover.CommandLineTools&version=2018.3.4"
+#tool "nuget:?package=JetBrains.dotCover.CommandLineTools&version=2019.1.3"
 
-#addin "nuget:?package=Cake.Sonar&version=1.1.18"
+#addin "nuget:?package=Cake.Sonar&version=1.1.22"
 
 #load "./build/paths.cake"
 #load "./build/names.cake"

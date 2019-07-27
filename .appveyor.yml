@@ -1,7 +1,7 @@
 version: 1.0.{build}-{branch}
 skip_tags: true
-image: Visual Studio 2017
-cache: tools -> ../build.cake, packages.config
+image: Visual Studio 2019 Preview
+cache: tools -> build.cake, tools/packages.config
 
 build_script:
   - ps: .\build.ps1 -target AppVeyor
@@ -16,7 +16,6 @@ for:
   branches:
     only:
       - master
-      - develop
       - /release\/.*/
       - /hotfix\/.*/
   deploy_script:
