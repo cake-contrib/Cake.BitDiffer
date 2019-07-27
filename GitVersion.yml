@@ -1,5 +1,12 @@
 mode: ContinuousDeployment
-
-branches: {}
+branches:
+  develop:
+    tag: dev
+  release:
+    tag: rc
+  pull-request:
+    tag: pr
+  hotfix:
+    tag: fix
 ignore:
   sha: []
